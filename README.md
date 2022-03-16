@@ -1,1 +1,1 @@
-# go-test-fiber
+# Go fiber basic app.
