@@ -1,0 +1,52 @@
+version: "3.8"
+
+services: # adds 2 services: mysql and phpmyadmin to connect with
+  basic-docker-api:
+    build: ../
+    ports:
+      - 8000:8000
+    depends_on:
+      - db 
+    networks:
+        - go-networks
+  db:
+    platform: linux/x86_64 # for mac m1
+    # image: mariadb:10.5.8
+    image: mysql:latest # use latest version of mysql
+    container_name: db # add a name for the container
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    environment: # add default values, see docs for more info.
+      MYSQL_USER: admin
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_DATABASE: techcoach # create this database on startup
+    networks:
+      - go-networks
+    volumes:
+      - my-db:/var/lib/mysql
+    # ports:
+    #   - '3306:3306'
+  phpmyadmin:
+    depends_on:
+      - db 
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
+    networks:
+      - go-networks
+    ports:
+      - "8082:80"
+    environment:
+      MYSQL_ROOT_PASSWORD: mypassword #(Required) set the password for the root superuser account.
+      PMA_HOST: db   # define the address/hostname of the mysql server eg mysql container name.
+      PMA_USER: root # this is the root user to login on startup
+      PMA_PASSWORD: admin # use the root password to login on startup.
+      # Create a new user on startup (optional)
+#      MYSQL_USER: newuser
+#      MYSQL_PASSWORD: mypassword
+
+networks:
+  go-networks:
+
+volumes: # add persistent data even if container is removed.
+  my-db:
