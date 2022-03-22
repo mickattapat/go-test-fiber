@@ -41,9 +41,6 @@ services: # adds 2 services: mysql and phpmyadmin to connect with
       PMA_HOST: db   # define the address/hostname of the mysql server eg mysql container name.
       PMA_USER: root # this is the root user to login on startup
       PMA_PASSWORD: admin # use the root password to login on startup.
-      # Create a new user on startup (optional)
-#      MYSQL_USER: newuser
-#      MYSQL_PASSWORD: mypassword
 
 networks:
   go-networks:
