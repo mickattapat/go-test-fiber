@@ -2,7 +2,7 @@ version: "3.8"
 
 services: # adds 2 services: mysql and phpmyadmin to connect with
   basic-docker-api:
-    build: ../
+    build: .
     ports:
       - 8000:8000
     depends_on:
@@ -20,7 +20,7 @@ services: # adds 2 services: mysql and phpmyadmin to connect with
       MYSQL_USER: admin
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_PASSWORD: admin
-      MYSQL_DATABASE: techcoach # create this database on startup
+      MYSQL_DATABASE: mydatabase # create this database on startup
     networks:
       - go-networks
     volumes:
